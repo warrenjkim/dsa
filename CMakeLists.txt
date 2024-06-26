@@ -57,6 +57,10 @@ include_directories(include)
 add_library(linked_list_lib STATIC src/c-code/llist.c)
 target_include_directories(linked_list_lib PUBLIC src/c-code)
 
+# BINARY SEARCH TREE
+add_library(binary_search_tree_lib STATIC src/c-code/bst.c)
+target_include_directories(binary_search_tree_lib PUBLIC src/c-code)
+
 # ===== END OF LIBRARIES =====
 
 
@@ -72,6 +76,7 @@ add_executable(
 target_link_libraries(
   main
   linked_list_lib
+  binary_search_tree_lib
 )
 
 # LINKED LIST
@@ -85,6 +90,17 @@ target_link_libraries(
   linked_list_lib
 )
 
+# BINARY SEARCH TREE
+add_executable(
+  binary_search_tree_test
+  tests/bst_test.cc
+)
+target_link_libraries(
+  binary_search_tree_test
+  gtest_main
+  binary_search_tree_lib
+)
+
 # ===== END OF EXECUTABLES =====
 
 
@@ -94,6 +110,7 @@ target_link_libraries(
 # ===== TESTS =====
 
 gtest_discover_tests(linked_list_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+gtest_discover_tests(binary_search_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 # ===== END OF TESTS =====
 
@@ -104,6 +121,8 @@ include(cmake/CodeCoverageReportConfig.cmake)
 generate_coverage_report(
   TARGETS
     linked_list_lib
+    binary_search_tree_lib
   TESTS
     linked_list_test
+    binary_search_tree_test
 )
