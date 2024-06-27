@@ -82,7 +82,7 @@ target_link_libraries(
 # LINKED LIST
 add_executable(
   linked_list_test
-  tests/llist_test.cc
+  tests/data-structures/llist_test.cc
 )
 target_link_libraries(
   linked_list_test
@@ -93,7 +93,7 @@ target_link_libraries(
 # BINARY SEARCH TREE
 add_executable(
   binary_search_tree_test
-  tests/bst_test.cc
+  tests/data-structures/bst_test.cc
 )
 target_link_libraries(
   binary_search_tree_test
@@ -109,8 +109,8 @@ target_link_libraries(
 
 # ===== TESTS =====
 
-gtest_discover_tests(linked_list_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
-gtest_discover_tests(binary_search_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+gtest_discover_tests(linked_list_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
+gtest_discover_tests(binary_search_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
 
 # ===== END OF TESTS =====
 
