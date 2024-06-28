@@ -4,7 +4,7 @@ static size_t max(const size_t lhs, const size_t rhs) {
   return lhs < rhs ? rhs : lhs;
 }
 
-AVLTree::AVLTree() : root_(nullptr) {}
+AVLTree::AVLTree() : root_(nullptr), size_(0) {}
 
 AVLTree::~AVLTree() {
   if (root_) {
@@ -12,7 +12,9 @@ AVLTree::~AVLTree() {
   }
 }
 
-AVLNode *AVLTree::root() { return root_; }
+avl::Node *AVLTree::root() { return root_; }
+
+size_t AVLTree::size() { return size_; }
 
 void AVLTree::insert(const int data) { root_ = recursive_insert(root_, data); }
 
@@ -20,13 +22,14 @@ void AVLTree::remove(const int target) {
   root_ = recursive_remove(root_, target);
 }
 
-AVLNode *AVLTree::find(const int target) {
+avl::Node *AVLTree::find(const int target) {
   return recursive_find(root_, target);
 }
 
-AVLNode *AVLTree::recursive_insert(AVLNode *root, const int data) {
+avl::Node *AVLTree::recursive_insert(avl::Node *root, const int data) {
   if (!root) {
-    return new AVLNode(data);
+    size_++;
+    return new avl::Node(data);
   }
 
   if (data < root->data) {
@@ -55,7 +58,7 @@ AVLNode *AVLTree::recursive_insert(AVLNode *root, const int data) {
   return rebalance(root, structure);
 }
 
-AVLNode *AVLTree::recursive_remove(AVLNode *root, const int target) {
+avl::Node *AVLTree::recursive_remove(avl::Node *root, const int target) {
   if (!root) {
     return nullptr;
   }
@@ -66,7 +69,7 @@ AVLNode *AVLTree::recursive_remove(AVLNode *root, const int target) {
     root->right = recursive_remove(root->right, target);
   } else {
     if (!root->left || !root->right) {
-      AVLNode *del = root->left ? root->left : root->right;
+      avl::Node *del = root->left ? root->left : root->right;
       if (!del) {
         delete root;
         return nullptr;
@@ -75,7 +78,7 @@ AVLNode *AVLTree::recursive_remove(AVLNode *root, const int target) {
         delete del;
       }
     } else {
-      AVLNode *del = successor(root);
+      avl::Node *del = successor(root);
       root->data = del->data;
       root->right = recursive_remove(root->right, del->data);
     }
@@ -101,7 +104,7 @@ AVLNode *AVLTree::recursive_remove(AVLNode *root, const int target) {
   return rebalance(root, structure);
 }
 
-AVLNode *AVLTree::recursive_find(AVLNode *root, const int target) {
+avl::Node *AVLTree::recursive_find(avl::Node *root, const int target) {
   if (!root) {
     return nullptr;
   }
@@ -115,9 +118,9 @@ AVLNode *AVLTree::recursive_find(AVLNode *root, const int target) {
   return root;
 }
 
-AVLNode *AVLTree::left_rotate(AVLNode *node) {
-  AVLNode *new_root = node->right;
-  AVLNode *subtree = new_root->left;
+avl::Node *AVLTree::left_rotate(avl::Node *node) {
+  avl::Node *new_root = node->right;
+  avl::Node *subtree = new_root->left;
 
   new_root->left = node;
   node->right = subtree;
@@ -128,9 +131,9 @@ AVLNode *AVLTree::left_rotate(AVLNode *node) {
   return new_root;
 }
 
-AVLNode *AVLTree::right_rotate(AVLNode *node) {
-  AVLNode *new_root = node->left;
-  AVLNode *subtree = new_root->right;
+avl::Node *AVLTree::right_rotate(avl::Node *node) {
+  avl::Node *new_root = node->left;
+  avl::Node *subtree = new_root->right;
 
   new_root->right = node;
   node->left = subtree;
@@ -141,7 +144,7 @@ AVLNode *AVLTree::right_rotate(AVLNode *node) {
   return new_root;
 }
 
-AVLNode *AVLTree::rebalance(AVLNode *node, const Structure structure) {
+avl::Node *AVLTree::rebalance(avl::Node *node, const Structure structure) {
   switch (structure) {
     case Structure::LEFT_LEFT:
       return right_rotate(node);
@@ -156,7 +159,7 @@ AVLNode *AVLTree::rebalance(AVLNode *node, const Structure structure) {
   }
 }
 
-size_t AVLTree::height(AVLNode *node) {
+size_t AVLTree::height(avl::Node *node) {
   if (!node) {
     return 0;
   }
@@ -164,12 +167,12 @@ size_t AVLTree::height(AVLNode *node) {
   return node->height;
 }
 
-int AVLTree::height_difference(AVLNode *node) {
+int AVLTree::height_difference(avl::Node *node) {
   return static_cast<int>(height(node->left) - height(node->right));
 }
 
-AVLNode *AVLTree::successor(AVLNode *root) {
-  AVLNode *successor = root->right;
+avl::Node *AVLTree::successor(avl::Node *root) {
+  avl::Node *successor = root->right;
   while (successor && successor->left) {
     successor = successor->left;
   }

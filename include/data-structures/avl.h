@@ -2,21 +2,22 @@
 #define AVL_TREE_H
 #include <stddef.h>
 
-struct AVLNode {
+namespace avl {
+struct Node {
   int data;
   size_t height;
 
-  AVLNode *left;
-  AVLNode *right;
+  Node *left;
+  Node *right;
 
-  AVLNode() : data(0), height(0), left(nullptr), right(nullptr) {}
-  AVLNode(const int data)
-      : data(data), height(1), left(nullptr), right(nullptr) {}
-  ~AVLNode() {
+  Node() : data(0), height(0), left(nullptr), right(nullptr) {}
+  Node(const int data) : data(data), height(1), left(nullptr), right(nullptr) {}
+  ~Node() {
     delete left;
     delete right;
   }
 };
+}  // namespace avl
 
 class AVLTree {
  private:
@@ -27,30 +28,32 @@ class AVLTree {
   ~AVLTree();
 
  public:
-  AVLNode *root();
+  avl::Node *root();
+  size_t size();
 
  public:
   void insert(const int data);
   void remove(const int target);
-  AVLNode *find(const int target);
+  avl::Node *find(const int target);
 
  private:
-  AVLNode *recursive_insert(AVLNode *root, const int data);
-  AVLNode *recursive_remove(AVLNode *root, const int target);
-  AVLNode *recursive_find(AVLNode *root, const int target);
+  avl::Node *recursive_insert(avl::Node *root, const int data);
+  avl::Node *recursive_remove(avl::Node *root, const int target);
+  avl::Node *recursive_find(avl::Node *root, const int target);
 
  private:
-  AVLNode *left_rotate(AVLNode *root);
-  AVLNode *right_rotate(AVLNode *root);
-  AVLNode *rebalance(AVLNode *node, const Structure structure);
+  avl::Node *left_rotate(avl::Node *root);
+  avl::Node *right_rotate(avl::Node *root);
+  avl::Node *rebalance(avl::Node *node, const Structure structure);
 
  private:
-  size_t height(AVLNode *node);
-  int height_difference(AVLNode *node);
-  AVLNode *successor(AVLNode *node);
+  size_t height(avl::Node *node);
+  int height_difference(avl::Node *node);
+  avl::Node *successor(avl::Node *node);
 
  private:
-  AVLNode *root_;
+  avl::Node *root_;
+  size_t size_;
 };
 
-#endif  // !AVL_TREE_H
+#endif  // !avl::_TREE_H
