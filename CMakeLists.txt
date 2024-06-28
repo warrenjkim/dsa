@@ -54,16 +54,16 @@ include_directories(include)
 # ===== LIBRARIES =====
 
 # LINKED LIST
-add_library(linked_list_lib STATIC src/c-code/llist.c)
-target_include_directories(linked_list_lib PUBLIC src/c-code)
+add_library(linked_list_lib STATIC src/data-structures/c-code/llist.c)
+target_include_directories(linked_list_lib PUBLIC src/data-structures/c-code)
 
 # BINARY SEARCH TREE
-add_library(binary_search_tree_lib STATIC src/c-code/bst.c)
-target_include_directories(binary_search_tree_lib PUBLIC src/c-code)
+add_library(binary_search_tree_lib STATIC src/data-structures/c-code/bst.c)
+target_include_directories(binary_search_tree_lib PUBLIC src/data-structures/c-code)
 
 # AVL TREE
-add_library(avl_tree_lib STATIC src/cpp-code/avl.cc)
-target_include_directories(avl_tree_lib PUBLIC src/cpp-code)
+add_library(avl_tree_lib STATIC src/data-structures/cpp-code/avl.cc)
+target_include_directories(avl_tree_lib PUBLIC src/data-structures/cpp-code)
 
 # ===== END OF LIBRARIES =====
 
