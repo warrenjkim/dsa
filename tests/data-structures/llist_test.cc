@@ -2,6 +2,12 @@
 
 #include "gtest/gtest.h"
 
+TEST(LinkedListTest, Nulls) {
+  LLNode *head = nullptr;
+  ll_delete(&head, 0);
+  ASSERT_FALSE(head);
+}
+
 TEST(LinkedListTest, Insert) {
   LLNode *head = nullptr;
   ll_insert(&head, 0);
@@ -112,4 +118,3 @@ TEST(LinkedListTest, DeleteNonExistent) {
 
   ASSERT_EQ(i, 0);
 }
-
