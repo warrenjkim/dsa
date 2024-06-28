@@ -61,6 +61,10 @@ target_include_directories(linked_list_lib PUBLIC src/c-code)
 add_library(binary_search_tree_lib STATIC src/c-code/bst.c)
 target_include_directories(binary_search_tree_lib PUBLIC src/c-code)
 
+# AVL TREE
+add_library(avl_tree_lib STATIC src/cpp-code/avl.cc)
+target_include_directories(avl_tree_lib PUBLIC src/cpp-code)
+
 # ===== END OF LIBRARIES =====
 
 
@@ -101,6 +105,17 @@ target_link_libraries(
   binary_search_tree_lib
 )
 
+# AVL TREE
+add_executable(
+  avl_tree_test
+  tests/data-structures/avl_test.cc
+)
+target_link_libraries(
+  avl_tree_test
+  gtest_main
+  avl_tree_lib
+)
+
 # ===== END OF EXECUTABLES =====
 
 
@@ -111,6 +126,7 @@ target_link_libraries(
 
 gtest_discover_tests(linked_list_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
 gtest_discover_tests(binary_search_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
+gtest_discover_tests(avl_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
 
 # ===== END OF TESTS =====
 
@@ -122,7 +138,9 @@ generate_coverage_report(
   TARGETS
     linked_list_lib
     binary_search_tree_lib
+    avl_tree_lib
   TESTS
     linked_list_test
     binary_search_tree_test
+    avl_tree_test
 )
