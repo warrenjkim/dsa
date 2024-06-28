@@ -61,10 +61,22 @@ class BinarySearchTreeTest : public testing::Test {
   }
 };
 
-TEST_F(BinarySearchTreeTest, Insert) {
+TEST_F(BinarySearchTreeTest, Nulls) {
+  BSTNode *null = nullptr;
+  bst_delete(&null, 0);
+  ASSERT_FALSE(null);
+  bst_find(&null, 0);
+  ASSERT_FALSE(null);
+  bst_destroy(&null);
+  ASSERT_FALSE(null);
+}
+
+TEST_F(BinarySearchTreeTest, InsertDuplicate) {
   BSTNode *root = nullptr;
   bst_insert(&root, 0);
-
+  ASSERT_TRUE(root);
+  ASSERT_EQ(root->data, 0);
+  bst_insert(&root, 0);
   ASSERT_TRUE(root);
   ASSERT_EQ(root->data, 0);
 }
@@ -142,4 +154,17 @@ TEST_F(BinarySearchTreeTest, DeleteRoot) {
   expected->left->right = node_init(3);
   expected->right->right = node_init(7);
   match_trees(root_, expected);
+}
+
+TEST_F(BinarySearchTreeTest, SearchExistent) {
+  ASSERT_TRUE(root_);
+  BSTNode *search = bst_find(&root_, 2);
+  ASSERT_TRUE(search);
+}
+
+TEST_F(BinarySearchTreeTest, SearchNonExistent) {
+  ASSERT_TRUE(root_);
+  BSTNode *search = bst_find(&root_, 0);
+  ASSERT_FALSE(search);
+  search = bst_find(&root_, 100);
 }

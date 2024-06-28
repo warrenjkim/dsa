@@ -3,6 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static BSTNode *successor(BSTNode *root) {
+  BSTNode *successor = root->right;
+  while (successor && successor->left) {
+    successor = successor->left;
+  }
+
+  return successor;
+}
 static BSTNode *node_init(const int data) {
   BSTNode *node = malloc(sizeof(BSTNode));
   if (!node) {
@@ -60,50 +68,34 @@ void bst_delete(BSTNode **root, const int target) {
     return;
   }
 
-  if (!((*root)->left)) {
-    BSTNode *del = *root;
-    *root = (*root)->right;
-    free(del);
+  if (!((*root)->left) || !((*root)->right)) {
+    BSTNode *del = (*root)->left ? (*root)->left : (*root)->right;
+    if (!del) {
+      free(*root);
+      *root = NULL;
+    } else {
+      **root = *del;
+      free(del);
+    }
+
     return;
   }
 
-  if (!((*root)->right)) {
-    BSTNode *del = *root;
-    *root = (*root)->left;
-    free(del);
-    return;
-  }
-
-  BSTNode *parent = *root;
-  BSTNode *successor = (*root)->right;
-  while (successor->left) {
-    parent = successor;
-    successor = successor->left;
-  }
-
-  (*root)->data = successor->data;
-
-  if (parent->left == successor) {
-    parent->left = successor->right;
-  } else {
-    parent->right = successor->right;
-  }
-
-  free(successor);
+  BSTNode *del = successor(*root);
+  (*root)->data = del->data;
+  bst_delete(&((*root)->right), del->data);
 }
 
 BSTNode *bst_find(BSTNode **root, const int target) {
-  if (!(*root)) {
+  if (!*root) {
     return NULL;
-  }
-
-  if ((*root)->data == target) {
-    return *root;
   }
 
   if (target < (*root)->data) {
     return bst_find(&(*root)->left, target);
-  } else {
+  } else if (target > (*root)->data) {
     return bst_find(&(*root)->right, target);
   }
+
+  return *root;
 }
