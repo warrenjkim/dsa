@@ -20,7 +20,6 @@ if (${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
   message(FATAL_ERROR "dumbass. lol")
 endif()
 
-# Turn on debug builds if we are building in a devel shell
 if (CMAKE_BUILD_TYPE STREQUAL "")
   message(STATUS "Build type set to default")
   set(CMAKE_BUILD_TYPE Debug)

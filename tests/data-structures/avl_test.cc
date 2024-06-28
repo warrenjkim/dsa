@@ -7,16 +7,22 @@ class AVLTreeTest : public testing::Test {
   AVLTree *tree_ = new AVLTree();
 
   void SetUp() override {
-    for (int i = 1; i < 10; i++) {
-      tree_->insert(i);
-    }
+    tree_->insert(10);
+    tree_->insert(8);
+    tree_->insert(6);
+    tree_->insert(4);
+    tree_->insert(5);
+    tree_->insert(12);
+    tree_->insert(14);
+    tree_->insert(16);
+    tree_->insert(15);
   }
 
   void TearDown() override { delete tree_; }
 
  protected:
   void match_trees(AVLNode *actual, AVLNode *expected) {
-    if (!actual || !expected) {
+    if (!actual && !expected) {
       return;
     }
 
@@ -42,103 +48,114 @@ class AVLTreeTest : public testing::Test {
   }
 };
 
-TEST_F(AVLTreeTest, Insert) {
+TEST_F(AVLTreeTest, InsertDuplicate) {
   AVLTree *tree = new AVLTree();
   ASSERT_TRUE(tree);
   tree->insert(0);
-
-  ASSERT_TRUE(tree);
-  ASSERT_TRUE(tree->find(0));
+  AVLNode *expected = new AVLNode(0);
+  match_trees(tree->root(), expected);
+  tree->insert(0);
+  match_trees(tree->root(), expected);
 }
 
 TEST_F(AVLTreeTest, InsertMultiple) {
   ASSERT_TRUE(tree_);
-  AVLNode *expected = new AVLNode(4);
+  AVLNode *expected = new AVLNode(8);
 
-  expected->left = new AVLNode(2);
-  expected->left->left = new AVLNode(1);
-  expected->left->right = new AVLNode(3);
+  expected->left = new AVLNode(5);
+  expected->left->left = new AVLNode(4);
+  expected->left->right = new AVLNode(6);
 
-  expected->right = new AVLNode(6);
-  expected->right->left = new AVLNode(5);
-  expected->right->right = new AVLNode(8);
-  expected->right->right->left = new AVLNode(7);
-  expected->right->right->right = new AVLNode(9);
+  expected->right = new AVLNode(12);
+
+  expected->right->left = new AVLNode(10);
+  expected->right->left->left = nullptr;
+  expected->right->left->right = nullptr;
+
+  expected->right->right = new AVLNode(15);
+  expected->right->right->left = new AVLNode(14);
+  expected->right->right->right = new AVLNode(16);
+  printf("===== Actual Tree =====\n");
+  inorder(tree_->root());
+  printf("\n===== Expected Tree =====\n");
+  inorder(expected);
   match_trees(tree_->root(), expected);
 }
 
-TEST_F(AVLTreeTest, DeleteLeaf) {
+TEST_F(AVLTreeTest, DeleteLeftHeavy) {
   ASSERT_TRUE(tree_);
-  tree_->remove(5);
-  AVLNode *expected = new AVLNode(4);
-
-  expected->left = new AVLNode(2);
-  expected->left->left = new AVLNode(1);
-  expected->left->right = new AVLNode(3);
-
-  expected->right = new AVLNode(8);
-  expected->right->left = new AVLNode(6);
-  expected->right->right = new AVLNode(9);
-  expected->right->right->right = new AVLNode(7);
-  match_trees(tree_->root(), expected);
-}
-
-TEST_F(AVLTreeTest, DeleteLeftChild) {
-  ASSERT_TRUE(tree_);
-  tree_->remove(5);
-  tree_->remove(6);
-  AVLNode *expected = new AVLNode(4);
-
-  expected->left = new AVLNode(2);
-  expected->left->left = new AVLNode(1);
-  expected->left->right = new AVLNode(3);
-
-  expected->right = new AVLNode(8);
-  expected->right->left = new AVLNode(7);
-  expected->right->right = new AVLNode(9);
-  match_trees(tree_->root(), expected);
-}
-
-TEST_F(AVLTreeTest, DeleteRightChild) {
-  ASSERT_TRUE(tree_);
-  tree_->remove(3);
-  tree_->remove(2);
-  AVLNode *expected = new AVLNode(6);
-
-  expected->left = new AVLNode(4);
-  expected->left->left = new AVLNode(1);
-  expected->left->right = new AVLNode(5);
-
-  expected->right = new AVLNode(8);
-  expected->right->left = new AVLNode(7);
-  expected->right->right = new AVLNode(9);
-  match_trees(tree_->root(), expected);
-}
-
-TEST_F(AVLTreeTest, DeleteRoot) {
-  ASSERT_TRUE(tree_);
-  tree_->remove(4);
+  tree_->remove(15);
+  tree_->remove(16);
+  tree_->remove(14);
+  tree_->remove(10);
+  tree_->remove(12);
   AVLNode *expected = new AVLNode(5);
-
-  expected->left = new AVLNode(2);
-  expected->left->left = new AVLNode(1);
-  expected->left->right = new AVLNode(3);
-
+  expected->left = new AVLNode(4);
   expected->right = new AVLNode(8);
   expected->right->left = new AVLNode(6);
-  expected->right->right = new AVLNode(9);
-  expected->right->right->right = new AVLNode(7);
+
+  printf("===== Actual Tree =====\n");
+  inorder(tree_->root());
+  printf("\n===== Expected Tree =====\n");
+  inorder(expected);
+  match_trees(tree_->root(), expected);
+}
+
+TEST_F(AVLTreeTest, DeleteRightHeavy) {
+  ASSERT_TRUE(tree_);
+  tree_->remove(10);
+  tree_->remove(12);
+  tree_->remove(8);
+  AVLNode *expected = new AVLNode(14);
+
+  expected->left = new AVLNode(5);
+  expected->left->left = new AVLNode(4);
+  expected->left->right = new AVLNode(6);
+
+  expected->right = new AVLNode(15);
+  expected->right->left = nullptr;
+  expected->right->right = new AVLNode(16);
+
+  printf("===== Actual Tree =====\n");
+  inorder(tree_->root());
+  printf("\n===== Expected Tree =====\n");
+  inorder(expected);
+  match_trees(tree_->root(), expected);
+}
+
+TEST_F(AVLTreeTest, DeleteNonExistent) {
+  ASSERT_TRUE(tree_);
+  tree_->remove(100);
+  AVLNode *expected = new AVLNode(8);
+
+  expected->left = new AVLNode(5);
+  expected->left->left = new AVLNode(4);
+  expected->left->right = new AVLNode(6);
+
+  expected->right = new AVLNode(12);
+
+  expected->right->left = new AVLNode(10);
+  expected->right->left->left = nullptr;
+  expected->right->left->right = nullptr;
+
+  expected->right->right = new AVLNode(15);
+  expected->right->right->left = new AVLNode(14);
+  expected->right->right->right = new AVLNode(16);
+  printf("===== Actual Tree =====\n");
+  inorder(tree_->root());
+  printf("\n===== Expected Tree =====\n");
+  inorder(expected);
   match_trees(tree_->root(), expected);
 }
 
 TEST_F(AVLTreeTest, SearchExistent) {
   ASSERT_TRUE(tree_);
-  AVLNode *search = tree_->find(7);
+  AVLNode *search = tree_->find(10);
   ASSERT_TRUE(search);
 }
 
 TEST_F(AVLTreeTest, SearchNonExistent) {
   ASSERT_TRUE(tree_);
-  AVLNode *search = tree_->find(0);
+  AVLNode *search = tree_->find(100);
   ASSERT_FALSE(search);
 }

@@ -69,7 +69,7 @@ AVLNode *AVLTree::recursive_remove(AVLNode *root, const int target) {
       AVLNode *del = root->left ? root->left : root->right;
       if (!del) {
         delete root;
-        root = nullptr;
+        return nullptr;
       } else {
         *root = *del;
         delete del;
@@ -79,10 +79,6 @@ AVLNode *AVLTree::recursive_remove(AVLNode *root, const int target) {
       root->data = del->data;
       root->right = recursive_remove(root->right, del->data);
     }
-  }
-
-  if (!root) {
-    return root;
   }
 
   root->height = 1 + max(height(root->left), height(root->right));
@@ -157,8 +153,6 @@ AVLNode *AVLTree::rebalance(AVLNode *node, const Structure structure) {
     case Structure::RIGHT_LEFT:
       node->right = right_rotate(node->right);
       return left_rotate(node);
-    default:
-      return node;
   }
 }
 
@@ -171,16 +165,12 @@ size_t AVLTree::height(AVLNode *node) {
 }
 
 int AVLTree::height_difference(AVLNode *node) {
-  if (!node) {
-    return 0;
-  }
-
   return static_cast<int>(height(node->left) - height(node->right));
 }
 
 AVLNode *AVLTree::successor(AVLNode *root) {
   AVLNode *successor = root->right;
-  while (successor->left) {
+  while (successor && successor->left) {
     successor = successor->left;
   }
 

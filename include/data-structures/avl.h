@@ -13,13 +13,8 @@ struct AVLNode {
   AVLNode(const int data)
       : data(data), height(1), left(nullptr), right(nullptr) {}
   ~AVLNode() {
-    if (left) {
-      delete left;
-    }
-
-    if (right) {
-      delete right;
-    }
+    delete left;
+    delete right;
   }
 };
 
