@@ -119,6 +119,17 @@ target_link_libraries(
   avl_tree_lib
 )
 
+# RED BLACK TREE
+add_executable(
+  red_black_tree_test
+  tests/data-structures/trees/rbt_test.cc
+)
+target_link_libraries(
+  red_black_tree_test
+  gtest_main
+  red_black_tree_lib
+)
+
 # ===== END OF EXECUTABLES =====
 
 
@@ -130,6 +141,7 @@ target_link_libraries(
 gtest_discover_tests(linked_list_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures/lists)
 gtest_discover_tests(binary_search_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures/trees)
 gtest_discover_tests(avl_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures/trees)
+gtest_discover_tests(red_black_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures/trees)
 
 # ===== END OF TESTS =====
 
@@ -142,8 +154,10 @@ generate_coverage_report(
     linked_list_lib
     binary_search_tree_lib
     avl_tree_lib
+    red_black_tree_lib
   TESTS
     linked_list_test
     binary_search_tree_test
     avl_tree_test
+    red_black_tree_test
 )
