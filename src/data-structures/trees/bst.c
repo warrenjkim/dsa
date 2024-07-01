@@ -1,4 +1,4 @@
-#include "data-structures/bst.h"
+#include "data-structures/trees/bst.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +12,7 @@ static BSTNode *successor(BSTNode *root) {
   return successor;
 }
 static BSTNode *node_init(const int data) {
-  BSTNode *node = malloc(sizeof(BSTNode));
+  BSTNode *node = (BSTNode *)malloc(sizeof(BSTNode));
   if (!node) {
     fprintf(stderr, "node_init() - malloc failed.");
     exit(EXIT_FAILURE);

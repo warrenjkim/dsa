@@ -53,16 +53,20 @@ include_directories(include)
 # ===== LIBRARIES =====
 
 # LINKED LIST
-add_library(linked_list_lib STATIC src/data-structures/c-code/llist.c)
-target_include_directories(linked_list_lib PUBLIC src/data-structures/c-code)
+add_library(linked_list_lib STATIC src/data-structures/lists/llist.c)
+target_include_directories(linked_list_lib PUBLIC src/data-structures/lists)
 
 # BINARY SEARCH TREE
-add_library(binary_search_tree_lib STATIC src/data-structures/c-code/bst.c)
-target_include_directories(binary_search_tree_lib PUBLIC src/data-structures/c-code)
+add_library(binary_search_tree_lib STATIC src/data-structures/trees/bst.c)
+target_include_directories(binary_search_tree_lib PUBLIC src/data-structures/trees)
 
 # AVL TREE
-add_library(avl_tree_lib STATIC src/data-structures/cpp-code/avl.cc)
-target_include_directories(avl_tree_lib PUBLIC src/data-structures/cpp-code)
+add_library(avl_tree_lib STATIC src/data-structures/trees/avl.cc)
+target_include_directories(avl_tree_lib PUBLIC src/data-structures/trees)
+
+# RED BLACK TREE
+add_library(red_black_tree_lib STATIC src/data-structures/trees/rbt.cc)
+target_include_directories(red_black_tree_lib PUBLIC src/data-structures/trees)
 
 # ===== END OF LIBRARIES =====
 
@@ -85,7 +89,7 @@ target_link_libraries(
 # LINKED LIST
 add_executable(
   linked_list_test
-  tests/data-structures/llist_test.cc
+  tests/data-structures/lists/llist_test.cc
 )
 target_link_libraries(
   linked_list_test
@@ -96,7 +100,7 @@ target_link_libraries(
 # BINARY SEARCH TREE
 add_executable(
   binary_search_tree_test
-  tests/data-structures/bst_test.cc
+  tests/data-structures/trees/bst_test.cc
 )
 target_link_libraries(
   binary_search_tree_test
@@ -107,7 +111,7 @@ target_link_libraries(
 # AVL TREE
 add_executable(
   avl_tree_test
-  tests/data-structures/avl_test.cc
+  tests/data-structures/trees/avl_test.cc
 )
 target_link_libraries(
   avl_tree_test
@@ -123,9 +127,9 @@ target_link_libraries(
 
 # ===== TESTS =====
 
-gtest_discover_tests(linked_list_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
-gtest_discover_tests(binary_search_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
-gtest_discover_tests(avl_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures)
+gtest_discover_tests(linked_list_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures/lists)
+gtest_discover_tests(binary_search_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures/trees)
+gtest_discover_tests(avl_tree_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/data-structures/trees)
 
 # ===== END OF TESTS =====
 

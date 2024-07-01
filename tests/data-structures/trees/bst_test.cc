@@ -1,4 +1,4 @@
-#include "data-structures/bst.h"
+#include "data-structures/trees/bst.h"
 
 #include "gtest/gtest.h"
 

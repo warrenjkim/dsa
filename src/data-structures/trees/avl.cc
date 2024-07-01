@@ -1,4 +1,6 @@
-#include "data-structures/avl.h"
+#include "data-structures/trees/avl.h"
+
+using avl::Node;
 
 static size_t max(const size_t lhs, const size_t rhs) {
   return lhs < rhs ? rhs : lhs;
@@ -12,7 +14,7 @@ AVLTree::~AVLTree() {
   }
 }
 
-avl::Node *AVLTree::root() { return root_; }
+Node *AVLTree::root() { return root_; }
 
 size_t AVLTree::size() { return size_; }
 
@@ -22,14 +24,14 @@ void AVLTree::remove(const int target) {
   root_ = recursive_remove(root_, target);
 }
 
-avl::Node *AVLTree::find(const int target) {
+Node *AVLTree::find(const int target) {
   return recursive_find(root_, target);
 }
 
-avl::Node *AVLTree::recursive_insert(avl::Node *root, const int data) {
+Node *AVLTree::recursive_insert(Node *root, const int data) {
   if (!root) {
     size_++;
-    return new avl::Node(data);
+    return new Node(data);
   }
 
   if (data < root->data) {
@@ -58,7 +60,7 @@ avl::Node *AVLTree::recursive_insert(avl::Node *root, const int data) {
   return rebalance(root, structure);
 }
 
-avl::Node *AVLTree::recursive_remove(avl::Node *root, const int target) {
+Node *AVLTree::recursive_remove(Node *root, const int target) {
   if (!root) {
     return nullptr;
   }
@@ -69,7 +71,7 @@ avl::Node *AVLTree::recursive_remove(avl::Node *root, const int target) {
     root->right = recursive_remove(root->right, target);
   } else {
     if (!root->left || !root->right) {
-      avl::Node *del = root->left ? root->left : root->right;
+      Node *del = root->left ? root->left : root->right;
       if (!del) {
         delete root;
         return nullptr;
@@ -78,7 +80,7 @@ avl::Node *AVLTree::recursive_remove(avl::Node *root, const int target) {
         delete del;
       }
     } else {
-      avl::Node *del = successor(root);
+      Node *del = successor(root);
       root->data = del->data;
       root->right = recursive_remove(root->right, del->data);
     }
@@ -104,7 +106,7 @@ avl::Node *AVLTree::recursive_remove(avl::Node *root, const int target) {
   return rebalance(root, structure);
 }
 
-avl::Node *AVLTree::recursive_find(avl::Node *root, const int target) {
+Node *AVLTree::recursive_find(Node *root, const int target) {
   if (!root) {
     return nullptr;
   }
@@ -118,9 +120,9 @@ avl::Node *AVLTree::recursive_find(avl::Node *root, const int target) {
   return root;
 }
 
-avl::Node *AVLTree::left_rotate(avl::Node *node) {
-  avl::Node *new_root = node->right;
-  avl::Node *subtree = new_root->left;
+Node *AVLTree::left_rotate(Node *node) {
+  Node *new_root = node->right;
+  Node *subtree = new_root->left;
 
   new_root->left = node;
   node->right = subtree;
@@ -131,9 +133,9 @@ avl::Node *AVLTree::left_rotate(avl::Node *node) {
   return new_root;
 }
 
-avl::Node *AVLTree::right_rotate(avl::Node *node) {
-  avl::Node *new_root = node->left;
-  avl::Node *subtree = new_root->right;
+Node *AVLTree::right_rotate(Node *node) {
+  Node *new_root = node->left;
+  Node *subtree = new_root->right;
 
   new_root->right = node;
   node->left = subtree;
@@ -144,7 +146,7 @@ avl::Node *AVLTree::right_rotate(avl::Node *node) {
   return new_root;
 }
 
-avl::Node *AVLTree::rebalance(avl::Node *node, const Structure structure) {
+Node *AVLTree::rebalance(Node *node, const Structure structure) {
   switch (structure) {
     case Structure::LEFT_LEFT:
       return right_rotate(node);
@@ -159,7 +161,7 @@ avl::Node *AVLTree::rebalance(avl::Node *node, const Structure structure) {
   }
 }
 
-size_t AVLTree::height(avl::Node *node) {
+size_t AVLTree::height(Node *node) {
   if (!node) {
     return 0;
   }
@@ -167,12 +169,12 @@ size_t AVLTree::height(avl::Node *node) {
   return node->height;
 }
 
-int AVLTree::height_difference(avl::Node *node) {
+int AVLTree::height_difference(Node *node) {
   return static_cast<int>(height(node->left) - height(node->right));
 }
 
-avl::Node *AVLTree::successor(avl::Node *root) {
-  avl::Node *successor = root->right;
+Node *AVLTree::successor(Node *root) {
+  Node *successor = root->right;
   while (successor && successor->left) {
     successor = successor->left;
   }

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "data-structures/bst.h"
-#include "data-structures/llist.h"
+#include "data-structures/trees/bst.h"
+#include "data-structures/lists/llist.h"
 
 void inorder(BSTNode *root, int depth);
 void linked_list_test();

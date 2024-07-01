@@ -1,4 +1,4 @@
-#include "data-structures/avl.h"
+#include "data-structures/trees/avl.h"
 
 #include "gtest/gtest.h"
 
