@@ -76,16 +76,6 @@ target_include_directories(red_black_tree_lib PUBLIC src/data-structures/trees)
 
 # ===== EXECUTABLES =====
 
-# MAIN
-add_executable(
-  main src/main.cc
-)
-target_link_libraries(
-  main
-  linked_list_lib
-  binary_search_tree_lib
-)
-
 # LINKED LIST
 add_executable(
   linked_list_test
