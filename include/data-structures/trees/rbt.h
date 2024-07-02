@@ -31,7 +31,7 @@ class Node : public tree::Node {
 
 class RBTree : public Tree {
  private:
-  enum class DoubleRed { LEFT_LEFT, RIGHT_RIGHT, LEFT_RIGHT, RIGHT_LEFT };
+  enum class Structure { LEFT_LEFT, RIGHT_RIGHT, LEFT_RIGHT, RIGHT_LEFT };
 
  public:
   RBTree();

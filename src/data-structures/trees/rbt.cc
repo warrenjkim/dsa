@@ -201,26 +201,26 @@ Node *RBTree::recolor(Node *z) {
 }
 
 Node *RBTree::restructure(Node *z) {
-  DoubleRed structure;
+  Structure structure;
   if (grandparent(z)->left == z->parent) {
-    structure = z->parent->left == z ? RBTree::DoubleRed::LEFT_LEFT
-                                     : RBTree::DoubleRed::LEFT_RIGHT;
+    structure = z->parent->left == z ? RBTree::Structure::LEFT_LEFT
+                                     : RBTree::Structure::LEFT_RIGHT;
   } else {
-    structure = z->parent->left == z ? RBTree::DoubleRed::RIGHT_LEFT
-                                     : RBTree::DoubleRed::RIGHT_RIGHT;
+    structure = z->parent->left == z ? RBTree::Structure::RIGHT_LEFT
+                                     : RBTree::Structure::RIGHT_RIGHT;
   }
 
   switch (structure) {
-    case DoubleRed::LEFT_LEFT:
+    case Structure::LEFT_LEFT:
       z = right_rotate(grandparent(z));
       break;
-    case DoubleRed::LEFT_RIGHT:
+    case Structure::LEFT_RIGHT:
       z = right_rotate(left_rotate(z->parent)->parent);
       break;
-    case DoubleRed::RIGHT_LEFT:
+    case Structure::RIGHT_LEFT:
       z = left_rotate(right_rotate(z->parent)->parent);
       break;
-    case DoubleRed::RIGHT_RIGHT:
+    case Structure::RIGHT_RIGHT:
       z = left_rotate(grandparent(z));
       break;
   }
