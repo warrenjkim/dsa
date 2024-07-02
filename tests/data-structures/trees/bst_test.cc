@@ -83,6 +83,7 @@ TEST_F(BinarySearchTreeTest, InsertDuplicate) {
 
 TEST_F(BinarySearchTreeTest, InsertMultiple) {
   ASSERT_TRUE(root_);
+
   BSTNode *expected = node_init(4);
   expected->left = node_init(2);
   expected->right = node_init(6);
@@ -90,6 +91,7 @@ TEST_F(BinarySearchTreeTest, InsertMultiple) {
   expected->left->right = node_init(3);
   expected->right->left = node_init(5);
   expected->right->right = node_init(7);
+
   match_trees(root_, expected);
 }
 
@@ -103,12 +105,14 @@ TEST_F(BinarySearchTreeTest, DeleteLeaf) {
   ASSERT_TRUE(root_);
   bst_delete(&root_, 1);
   ASSERT_TRUE(root_);
+
   BSTNode *expected = node_init(4);
   expected->left = node_init(2);
   expected->right = node_init(6);
   expected->left->right = node_init(3);
   expected->right->left = node_init(5);
   expected->right->right = node_init(7);
+
   match_trees(root_, expected);
 }
 
@@ -117,6 +121,7 @@ TEST_F(BinarySearchTreeTest, DeleteLeftChild) {
   bst_insert(&root_, 0);
   ASSERT_TRUE(root_);
   bst_delete(&root_, 1);
+
   BSTNode *expected = node_init(4);
   expected->left = node_init(2);
   expected->right = node_init(6);
@@ -124,6 +129,7 @@ TEST_F(BinarySearchTreeTest, DeleteLeftChild) {
   expected->left->right = node_init(3);
   expected->right->left = node_init(5);
   expected->right->right = node_init(7);
+
   match_trees(root_, expected);
 }
 
@@ -133,6 +139,7 @@ TEST_F(BinarySearchTreeTest, DeleteRightChild) {
   ASSERT_TRUE(root_);
   bst_delete(&root_, 7);
   ASSERT_TRUE(root_);
+
   BSTNode *expected = node_init(4);
   expected->left = node_init(2);
   expected->right = node_init(6);
@@ -140,6 +147,7 @@ TEST_F(BinarySearchTreeTest, DeleteRightChild) {
   expected->left->right = node_init(3);
   expected->right->left = node_init(5);
   expected->right->right = node_init(8);
+
   match_trees(root_, expected);
 }
 
@@ -147,12 +155,14 @@ TEST_F(BinarySearchTreeTest, DeleteRoot) {
   ASSERT_TRUE(root_);
   bst_delete(&root_, 4);
   ASSERT_TRUE(root_);
+
   BSTNode *expected = node_init(5);
   expected->left = node_init(2);
   expected->right = node_init(6);
   expected->left->left = node_init(1);
   expected->left->right = node_init(3);
   expected->right->right = node_init(7);
+
   match_trees(root_, expected);
 }
 

@@ -131,7 +131,6 @@ TEST_F(RBTreeTest, InsertLeftLeft) {
   inorder(expected);
   match_trees(tree->root(), expected);
   delete tree;
-  delete expected;
 }
 
 TEST_F(RBTreeTest, InsertRightRight) {
@@ -165,7 +164,6 @@ TEST_F(RBTreeTest, InsertRightRight) {
   inorder(expected);
   match_trees(tree->root(), expected);
   delete tree;
-  delete expected;
 }
 
 TEST_F(RBTreeTest, InsertLeftRight) {
@@ -195,7 +193,6 @@ TEST_F(RBTreeTest, InsertLeftRight) {
   inorder(expected);
   match_trees(tree->root(), expected);
   delete tree;
-  delete expected;
 }
 
 TEST_F(RBTreeTest, InsertRightLeft) {
@@ -225,7 +222,6 @@ TEST_F(RBTreeTest, InsertRightLeft) {
   inorder(expected);
   match_trees(tree->root(), expected);
   delete tree;
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteRedLeaf) {
@@ -257,7 +253,6 @@ TEST_F(RBTreeTest, DeleteRedLeaf) {
   printf("\n===== Expected Tree =====\n");
   inorder(expected);
   match_trees(tree_->root(), expected);
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteOneChild) {
@@ -289,7 +284,6 @@ TEST_F(RBTreeTest, DeleteOneChild) {
   printf("\n===== Expected Tree =====\n");
   inorder(expected);
   match_trees(tree_->root(), expected);
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteBlackSiblingLeftLeft) {
@@ -322,7 +316,6 @@ TEST_F(RBTreeTest, DeleteBlackSiblingLeftLeft) {
   printf("\n===== Expected Tree =====\n");
   inorder(expected);
   match_trees(tree_->root(), expected);
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteBlackSiblingLeftRight) {
@@ -353,7 +346,6 @@ TEST_F(RBTreeTest, DeleteBlackSiblingLeftRight) {
   printf("\n===== Expected Tree =====\n");
   inorder(expected);
   match_trees(tree_->root(), expected);
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteFull) {
@@ -384,7 +376,6 @@ TEST_F(RBTreeTest, DeleteFull) {
   printf("\n===== Expected Tree =====\n");
   inorder(expected);
   match_trees(tree_->root(), expected);
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteBlackFull) {
@@ -411,7 +402,6 @@ TEST_F(RBTreeTest, DeleteBlackFull) {
   printf("\n===== Expected Tree =====\n");
   inorder(expected);
   match_trees(tree_->root(), expected);
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteRoot) {
@@ -444,7 +434,6 @@ TEST_F(RBTreeTest, DeleteRoot) {
   printf("\n===== Expected Tree =====\n");
   inorder(expected);
   match_trees(tree_->root(), expected);
-  delete expected;
 }
 
 TEST_F(RBTreeTest, DeleteNonExistent) {
